@@ -1,18 +1,18 @@
 
 
 bulk insert tetrika.dbo.users
-from 'C:\Users\GTAO\git\Tetrika\3\Data\users2.txt'
+from '.\Data\users2.txt' -- full path required
 with ( codepage = 'ACP', datafiletype = 'char', fieldterminator = '|', rowterminator = '\n', check_constraints);
 
 
 bulk insert tetrika.dbo.lessons
-from 'C:\Users\GTAO\git\Tetrika\3\Data\lessons2.txt'
+from '.\Data\lessons2.txt' -- full path required
 with ( codepage = 'ACP', datafiletype = 'char', fieldterminator = '|', rowterminator = '\n', check_constraints);
 
 bulk insert tetrika.dbo.participants
-from 'C:\Users\GTAO\git\Tetrika\3\Data\participants2.txt'
-with ( codepage = 'ACP', datafiletype = 'char', fieldterminator = '|', rowterminator = '\n');
+from '.\Data\participants2.txt' -- full path required
+with ( codepage = 'ACP', datafiletype = 'char', fieldterminator = '|', rowterminator = '\n'); -- check_constraints has been removed to be able to load the data with incorrect foreign keys
 
 bulk insert tetrika.dbo.quality
-from 'C:\Users\GTAO\git\Tetrika\3\Data\quality2.txt'
-with ( codepage = 'ACP', datafiletype = 'char', fieldterminator = '|', rowterminator = '\n');
+from '.\Data\quality2.txt' -- full path required
+with ( codepage = 'ACP', datafiletype = 'char', fieldterminator = '|', rowterminator = '\n'); -- check_constraints has been removed to be able to load the data with incorrect foreign keys

@@ -2,11 +2,11 @@ use tetrika
 go
 
 
-create table #tmp (event_id int, avg_qty float)
+create table #tmp (event_id int, avg_qty float)			-- temporary table for saving (event, avg) table
 GO
 
 
-insert #tmp (event_id, avg_qty)
+insert #tmp (event_id, avg_qty)		
 			select event_id, avg(tech_quality) as avg_qty
 			from (
 
@@ -16,7 +16,7 @@ insert #tmp (event_id, avg_qty)
 						(	
 						select id,A.event_id, scheduled_time,user_id 
 						from(	
-								select id, event_id, dateadd(hour,3,scheduled_time) as scheduled_time 
+								select id, event_id, dateadd(hour,3,scheduled_time) as scheduled_time  -- UTC + 3, so dateadd(hour, 3, ...)
 								from lessons 
 								where subject='phys'
 							) A
@@ -25,19 +25,22 @@ insert #tmp (event_id, avg_qty)
 								select event_id, user_id 
 								from participants
 							) B 
-									on A.event_id = B.event_id
+									on A.event_id = B.event_id			-- joining users and time by event
 						) C
 							JOIN
 						(
 							select * from quality
 						) D 
-								on C.id = D.lesson_id
+								on C.id = D.lesson_id					-- to join it with quality
 						)
 
 
-				) as  G group by event_id 
+				) as  G group by event_id 			-- and finally to find average quality for each event
 
 
+
+
+-- joining #tmp -> lessons -> participants -> users to get required data
 select cast(scheduled_time as date) as scheduled_time, user_id, avg_qty from 
 (
 select scheduled_time, user_id, avg_qty from
