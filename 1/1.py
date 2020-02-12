@@ -1,20 +1,20 @@
-arr = []
-
+# loading names.txt string object into array by ',' separator
 with open('names.txt','r') as f:
-    arr = f.read().split(',')
+    arr = f.read().split(',') 
 
-arr = [ elem[1:-1] for elem in arr]
-arr[-1] = arr[-1][:-1]
+# first: deleting quotes from array elements ('"AARON"' -> 'AARON') by iterating it with generator
+# second: sorting and iterating the array received with generator to get [[name, char_sum],...] object
+# third: iterating each name by chars, getting their decimal codes with ord() with generator,
+#        (ord("A") = 65 means we have to subtract 64 from received values)
+# fourth: summing received arrays with sum()
 
+arr = [[line, sum([ord(i.upper())-64 for i in line]) ] for line in sorted([ name[1:-1] for name in arr])] 
 
-arr.sort()
-
-arr = [[elem, sum([ord(i.upper())-64 for i in elem]) ] for elem in arr]
+# getting product of received sums
+# getting [[name, sum, product], ...] object
 
 arr = [[elem[0],elem[1],(arr.index(elem)+1)*elem[1]] for elem in arr ]
 
-s = 0
-for elem in arr:
-    s += elem[2]
 
-print(s)
+# printing the answer after summing products
+print("Answer: ", sum([elem[2] for elem in arr]))
